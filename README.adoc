@@ -56,12 +56,12 @@ postgres:latest
 
 cd quokka-backend
 ./mvnw clean package
-docker build -f src/main/docker/Dockerfile.jvm -t tedwon/quokka-backend:0.1.0 .
-docker run -i --rm -p 8080:8080 --network quokka_net tedwon/quokka-backend:0.1.0
+docker build -f src/main/docker/Dockerfile.jvm -t tedwon/quokka-backend:latest .
+docker run -i --rm -p 8080:8080 --network quokka_net tedwon/quokka-backend:latest
 
 cd quokka-frontend
-docker build -t tedwon/quokka-frontend:0.1.0 .
-docker run -p 3000:3000 --network quokka_net tedwon/quokka-frontend:0.1.0
+docker build -t tedwon/quokka-frontend:latest .
+docker run -p 3000:3000 --network quokka_net tedwon/quokka-frontend:latest
 ----
 
 == Run Quokka with Docker Compose
@@ -85,7 +85,7 @@ docker-compose -f docker-compose.yml down
 
 [source,bash,options="nowrap"]
 ----
-docker push tedwon/quokka-backend:0.1.0
+docker push tedwon/quokka-backend:latest
 
-docker push tedwon/quokka-frontend:0.1.0
+docker push tedwon/quokka-frontend:latest
 ----
