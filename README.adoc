@@ -9,31 +9,45 @@
 
 = https://github.com/tedwon/quokka[Quokka Project]
 
-== https://github.com/tedwon/quokka-backend[Simple Memo App Project based on Quarkus with Java]
+== Simple Memo App Project based on Quarkus with Java
 
 == Quokka Projects
 
 https://github.com/tedwon/quokka
 
+
 === Quokka Backend Project
 
-https://github.com/tedwon/quokka-backend
-
-https://hub.docker.com/repository/docker/tedwon/quokka-backend
+https://github.com/tedwon/quokka/tree/main/quokka-backend
 
 
 === Quokka Frontend Project
 
-https://github.com/tedwon/quokka-frontend
+https://github.com/tedwon/quokka/tree/main/quokka-frontend
 
-https://hub.docker.com/repository/docker/tedwon/quokka-frontend
 
-=== Quokka DB Project
+=== Quokka DB Project | PostgreSQL
 
 https://hub.docker.com/_/postgres
 
 
-== Run Quokka Projects with Docker
+== Run Quokka with Docker Compose
+
+[source,bash,options="nowrap"]
+----
+docker-compose -f docker-compose.yml up -d
+----
+
+
+=== Stop Quokka with Docker Compose
+
+[source,bash,options="nowrap"]
+----
+docker-compose -f docker-compose.yml down
+----
+
+
+=== Run Quokka Projects with Docker
 
 [source,bash,options="nowrap"]
 ----
@@ -60,20 +74,6 @@ docker run -i --rm -p 8080:8080 --network quokka_net tedwon/quokka-backend:lates
 cd quokka-frontend
 docker build -t tedwon/quokka-frontend:latest .
 docker run -p 3000:3000 --network quokka_net tedwon/quokka-frontend:latest
-----
-
-== Run Quokka with Docker Compose
-
-[source,bash,options="nowrap"]
-----
-docker-compose -f docker-compose.yml up -d
-----
-
-== Stop Quokka with Docker Compose
-
-[source,bash,options="nowrap"]
-----
-docker-compose -f docker-compose.yml down
 ----
 
 == Push Quokka projects to Docker Hub
