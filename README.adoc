@@ -2,8 +2,6 @@
 :email: iamtedwon@gmail.com
 :toc: left
 :toclevels: 5
-:sectnums:
-:sectnumlevels: 5
 :icons: font
 :idprefix:
 :idseparator: -
