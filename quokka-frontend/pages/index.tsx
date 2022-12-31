@@ -327,6 +327,9 @@ function MemoTable(props: {
             )
     };
 
+    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
+
     return (
         <div>
             <h2>Memos</h2>
@@ -342,13 +345,15 @@ function MemoTable(props: {
                                 }}
                             >
                                 <TableCell component="th" scope="row" variant="body">
+                                    <b>Pin{memo.pin === true ? <Checkbox {...label} disabled checked /> : <Checkbox {...label} disabled />}</b>
+                                    <br/>
                                     <b>{memo.title}</b>
                                     <br/>
                                     {memo.body.split("\n").map((line, idx) => (
                                         <p key={idx}>{line}</p>
                                     ))}
                                     <br/>
-                                    {memo.tags.length > 0 ? "Tags: " + memo.tags : ""}
+                                    {memo.tags.length > 0 ? "Tags: " + memo.tags : null}
                                 </TableCell>
                             </TableRow>
                         ))}
