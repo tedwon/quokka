@@ -207,8 +207,6 @@ function SearchBox(props: {
                 };
                 const keyword: string = target.search.value; // typechecks!
 
-                console.log(pin)
-
                 fetch(BACKEND_SERVER_URL + "/memo/" + pin + "/" + keyword)
                     .then(res => res.json())
                     .then((memos: Memo[]) => {
