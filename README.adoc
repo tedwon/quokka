@@ -7,9 +7,9 @@
 :idseparator: -
 
 
-= https://github.com/tedwon/quokka[Quokka Project]
+= https://github.com/tedwon/quokka[Ted's Quokka Project]
 
-== Simple Memo App Project based on Quarkus and Next.js
+== Simple Memo App based on Quarkus with Java and React Next.js with TypeScript
 
 == Quokka Projects
 
