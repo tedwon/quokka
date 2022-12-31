@@ -25,6 +25,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import Link from 'next/link'
 
 // https://www.typescriptlang.org/static/TypeScript%20Types-ae199d69aeecf7d4a2704a528d0fd3f9.png
 type Memo = {
@@ -57,7 +58,7 @@ function AppHead() {
     return (
         <div>
             <QuokkaAppHead></QuokkaAppHead>
-            <h1>Quokka Memo App</h1>
+            <h1><Link href="https://github.com/tedwon/quokka" target="_blank">Quokka Memo App</Link></h1>
             {clock}
         </div>
     );
@@ -197,7 +198,8 @@ function SearchBox(props: {
 
     return (
         <article>
-            <h2>Search&nbsp;&nbsp;<FormControlLabel control={<Checkbox checked={pin} onChange={handlePinChange}/>} label="Pin"/></h2>
+            <h2>Search&nbsp;&nbsp;<FormControlLabel control={<Checkbox checked={pin} onChange={handlePinChange}/>}
+                                                    label="Pin"/></h2>
             <form onSubmit={(event: React.SyntheticEvent) => {
                 event.preventDefault();
                 const target = event.target as typeof event.target & {
