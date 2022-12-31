@@ -9,7 +9,7 @@
 
 = https://github.com/tedwon/quokka[Quokka Project]
 
-== Simple Memo App Project based on Quarkus with Java
+== Simple Memo App Project based on Quarkus and Next.js
 
 == Quokka Projects
 
