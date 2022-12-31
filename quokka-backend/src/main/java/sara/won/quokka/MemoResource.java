@@ -48,9 +48,14 @@ public class MemoResource {
     @GET
     @Path("{a:text|txt}")
     @Produces(MediaType.TEXT_PLAIN)
-    public List<Memo> getAsText() {
-        return entityManager.createNamedQuery("Memos.findAll", Memo.class)
+    public String getAsText() {
+        StringBuilder result = new StringBuilder();
+        List<Memo> resultList = entityManager.createNamedQuery("Memos.findAll", Memo.class)
                 .getResultList();
+        resultList.forEach(memo -> {
+            result.append(memo.exportToString());
+        });
+        return result.toString();
     }
 
     @GET

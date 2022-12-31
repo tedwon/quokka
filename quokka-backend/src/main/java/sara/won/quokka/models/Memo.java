@@ -120,12 +120,32 @@ public class Memo {
         return Objects.hash(id, title, body, tags, pin, date);
     }
 
+    public String exportToString() {
+        final StringBuilder sb = new StringBuilder();
+        if (title != null && !title.trim().equals("")) {
+            sb.append("Title: " + title);
+            sb.append("\n\n");
+        }
+        sb.append(body);
+        if (tags != null && !tags.trim().equals("")) {
+            sb.append("\n\n");
+            sb.append("Tags: " + tags);
+        }
+        sb.append("\n\n----------------------------\n\n");
+
+        return sb.toString();
+
+    }
+
     @Override
     public String toString() {
-        return "\n----------------------------" +
-                "\ntitle='" + title + '\'' +
-                "\nbody='" + body + '\'' +
-                "\ntags='" + tags + '\'' +
-                "\n----------------------------\n\n";
+        return "Memo{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", tags='" + tags + '\'' +
+                ", pin=" + pin +
+                ", date=" + date +
+                '}';
     }
 }
