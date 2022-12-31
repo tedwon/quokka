@@ -9,7 +9,6 @@ import sara.won.quokka.models.Memo;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -47,15 +46,26 @@ public class MemoResource {
     }
 
     @GET
+    @Path("{pin}/")
+    public List<Memo> getByKeyword(Boolean pin) {
+        String namedQuery = "Memos.findAll";
+        if (pin) {
+            namedQuery = "Memos.findPinned";
+        }
+        return entityManager.createNamedQuery(namedQuery).getResultList();
+    }
+
+    @GET
     @Path("{pin}/{keyword}")
     public List<Memo> getByKeyword(String pin, String keyword) {
+        System.out.println(pin + " : " + keyword);
         String namedQuery = "Memos.findByKeyword";
         if (Boolean.parseBoolean(pin)) {
             namedQuery = "Memos.findPinnedByKeyword";
         }
-        Query query = entityManager.createNamedQuery(namedQuery);
-        query.setParameter("keyword", "%" + keyword + "%");
-        return (List<Memo>) query.getResultList();
+        return entityManager.createNamedQuery(namedQuery)
+                .setParameter("keyword", "%" + keyword + "%")
+                .getResultList();
     }
 
     @GET
