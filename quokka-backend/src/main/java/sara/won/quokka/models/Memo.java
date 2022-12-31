@@ -122,13 +122,10 @@ public class Memo {
 
     @Override
     public String toString() {
-        return "Memo{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", body='" + body + '\'' +
-                ", tags='" + tags + '\'' +
-                ", pin=" + pin +
-                ", date=" + date +
-                '}';
+        return "\n----------------------------" +
+                "\ntitle='" + title + '\'' +
+                "\nbody='" + body + '\'' +
+                "\ntags='" + tags + '\'' +
+                "\n----------------------------\n\n";
     }
 }

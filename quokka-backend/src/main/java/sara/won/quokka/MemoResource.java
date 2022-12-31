@@ -46,6 +46,14 @@ public class MemoResource {
     }
 
     @GET
+    @Path("{a:text|txt}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public List<Memo> getAsText() {
+        return entityManager.createNamedQuery("Memos.findAll", Memo.class)
+                .getResultList();
+    }
+
+    @GET
     @Path("{pin}/")
     public List<Memo> getByKeyword(Boolean pin) {
         String namedQuery = "Memos.findAll";
