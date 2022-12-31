@@ -138,7 +138,6 @@ function CreateMemo(props: {
                 TransitionComponent={Transition}
             >
                 <DialogTitle>Create Memo</DialogTitle>
-                <p/>
                 <DialogContent>
                     <TextField
                         id="outlined-basic"
@@ -365,7 +364,6 @@ function MemoTable(props: {
                 TransitionComponent={Transition}
             >
                 <DialogTitle>Update Memo</DialogTitle>
-                <p/>
                 <DialogContent>
                     <TextField
                         id="outlined-basic"
