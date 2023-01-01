@@ -18,6 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "Memo")
 @NamedQuery(name = "Memos.findAll", query = "SELECT m FROM Memo m ORDER BY m.pin DESC, m.date DESC", hints = @QueryHint(name = "org.hibernate.cacheable", value = "true"))
+@NamedQuery(name = "Memos.findByTag", query = "SELECT m FROM Memo m WHERE m.tags LIKE :tagSearch ORDER BY m.pin DESC, m.date DESC")
 @NamedQuery(name = "Memos.findPinned", query = "SELECT m FROM Memo m WHERE m.pin = true ORDER BY m.date DESC", hints = @QueryHint(name = "org.hibernate.cacheable", value = "true"))
 @NamedQuery(name = "Memos.findByKeyword", query = "SELECT m FROM Memo m WHERE (upper(m.title) LIKE upper(:keyword)) OR (upper(m.body) LIKE upper(:keyword)) OR (upper(m.tags) LIKE upper(:keyword)) ORDER BY m.pin DESC, m.date DESC")
 @NamedQuery(name = "Memos.findPinnedByKeyword", query = "SELECT m FROM Memo m WHERE m.pin = true AND ((upper(m.title) LIKE upper(:keyword)) OR (upper(m.body) LIKE upper(:keyword)) OR (upper(m.tags) LIKE upper(:keyword))) ORDER BY m.pin DESC, m.date DESC")

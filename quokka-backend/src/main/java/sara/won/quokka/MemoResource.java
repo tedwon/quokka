@@ -59,7 +59,7 @@ public class MemoResource {
     }
 
     @GET
-    @Path("{pin}/")
+    @Path("{pin}")
     public List<Memo> getByKeyword(Boolean pin) {
         String namedQuery = "Memos.findAll";
         if (pin) {
@@ -71,7 +71,14 @@ public class MemoResource {
     @GET
     @Path("{pin}/{keyword}")
     public List<Memo> getByKeyword(String pin, String keyword) {
-        System.out.println(pin + " : " + keyword);
+        if (keyword.startsWith("tag:")) {
+            String tagSearch = keyword.substring(4);
+            System.out.println(tagSearch);
+            return entityManager.createNamedQuery("Memos.findByTag")
+                    .setParameter("tagSearch", "%" + tagSearch + "%")
+                    .getResultList();
+        }
+
         String namedQuery = "Memos.findByKeyword";
         if (Boolean.parseBoolean(pin)) {
             namedQuery = "Memos.findPinnedByKeyword";
