@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  db:
+  quokka-db:
     image: postgres:latest
     volumes:
       - /var/quokka_db_data:/var/lib/postgresql/data
@@ -11,16 +11,16 @@ services:
       POSTGRES_USER: quokka
       POSTGRES_PASSWORD: quokka
       POSTGRES_DB: quokka_db
-  backend:
+  quokka-backend:
     depends_on:
-      - db
+      - quokka-db
     image: tedwon/quokka-backend:latest
     ports:
       - "8080:8080"
     restart: always
-  frontend:
+  quokka-frontend:
     depends_on:
-      - backend
+      - quokka-backend
     image: tedwon/quokka-frontend:latest
     ports:
       - "3000:3000"
