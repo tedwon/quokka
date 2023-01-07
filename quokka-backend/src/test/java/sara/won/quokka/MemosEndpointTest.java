@@ -1,8 +1,7 @@
 package sara.won.quokka;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -14,11 +13,39 @@ import static org.hamcrest.core.IsNot.not;
 @QuarkusTest
 public class MemosEndpointTest {
 
+    @BeforeEach
+    void init() {
+        // Delete test data
+        try {
+            final int idSara = (int) ((ArrayList<?>) given()
+                    .when().get("/quokka/memo/search/Meet Sara at school at 2:45").getBody().jsonPath().get("id")).get(0);
+            // Delete
+            given()
+                    .when().delete("/quokka/memo/" + idSara)
+                    .then()
+                    .statusCode(204);
+
+            final int idNara = (int) ((ArrayList<?>) given()
+                    .when().get("/quokka/memo/search/Meet Nara at school at 2:45").getBody().jsonPath().get("id")).get(0);
+            given()
+                    .when().delete("/quokka/memo/" + idNara)
+                    .then()
+                    .statusCode(204);
+
+            final int idSaraNara = (int) ((ArrayList<?>) given()
+                    .when().get("/quokka/memo/search/Meet Sara and Katie at school at 2:45").getBody().jsonPath().get("id")).get(0);
+            given()
+                    .when().delete("/quokka/memo/" + idSaraNara)
+                    .then()
+                    .statusCode(204);
+        } catch (Exception e) {
+        }
+    }
+
     @Test
     public void testListAllMemos() {
         // Create
         given()
-                .when()
                 .body("{\n" +
                         "    \"title\": \"Pick up Sara\",\n" +
                         "    \"body\": \"Meet Sara at school at 2:45\",\n" +
@@ -26,12 +53,13 @@ public class MemosEndpointTest {
                         "    \"pin\": true\n" +
                         "}")
                 .contentType("application/json")
+                .when()
                 .post("/quokka/memo")
                 .then()
-                .statusCode(201);
+                .statusCode(201)
+                .body("title", containsString("Pick up Sara"));
 
         given()
-                .when()
                 .body("{\n" +
                         "    \"title\": \"Pick up Nara\",\n" +
                         "    \"body\": \"Meet Nara at school at 2:45\",\n" +
@@ -39,6 +67,7 @@ public class MemosEndpointTest {
                         "    \"pin\": true\n" +
                         "}")
                 .contentType("application/json")
+                .when()
                 .post("/quokka/memo")
                 .then()
                 .statusCode(201);
@@ -56,7 +85,7 @@ public class MemosEndpointTest {
                 .then()
                 .statusCode(409);
 
-        // Retrieve
+        // Retrieve all data
         given()
                 .when().get("/quokka/memo")
                 .then()
@@ -68,9 +97,10 @@ public class MemosEndpointTest {
                         containsString("true")
                 );
 
+        // Search by keyword
         given()
-                .when().get("/quokka/memo/Meet Sara at school at 2:45")
-        .then()
+                .when().get("/quokka/memo/search/Meet Sara at school at 2:45")
+                .then()
                 .statusCode(200)
                 .body(
                         containsString("Pick up Sara"),
@@ -79,9 +109,9 @@ public class MemosEndpointTest {
                         containsString("true")
                 );
 
-        // Update
+        // Search & Update
         final int idSara = (int) ((ArrayList<?>) given()
-                .when().get("/quokka/memo/Meet Sara at school at 2:45").getBody().jsonPath().get("id")).get(0);
+                .when().get("/quokka/memo/search/Meet Sara at school at 2:45").getBody().jsonPath().get("id")).get(0);
         given()
                 .when()
                 .body("{\n" +
@@ -96,7 +126,7 @@ public class MemosEndpointTest {
                 .statusCode(200);
 
         final int idNara = (int) ((ArrayList<?>) given()
-                .when().get("/quokka/memo/Meet Nara at school at 2:45").getBody().jsonPath().get("id")).get(0);
+                .when().get("/quokka/memo/search/Meet Nara at school at 2:45").getBody().jsonPath().get("id")).get(0);
         given()
                 .when()
                 .body("{\n" +

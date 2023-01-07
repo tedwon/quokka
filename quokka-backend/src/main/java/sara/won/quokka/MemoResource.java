@@ -46,7 +46,7 @@ public class MemoResource {
     }
 
     @GET
-    @Path("{a:text|txt}")
+    @Path("export/{a:text|txt}")
     @Produces(MediaType.TEXT_PLAIN)
     public String getAsText() {
         StringBuilder result = new StringBuilder();
@@ -59,8 +59,16 @@ public class MemoResource {
     }
 
     @GET
-    @Path("{pin}")
-    public List<Memo> getByKeyword(Boolean pin) {
+    @Path("search/{keyword}")
+    public List<Memo> getByKeyword(String keyword) {
+        return entityManager.createNamedQuery("Memos.findByKeyword")
+                .setParameter("keyword", "%" + keyword + "%")
+                .getResultList();
+    }
+
+    @GET
+    @Path("pin/{pin}")
+    public List<Memo> getByPinFlag(Boolean pin) {
         String namedQuery = "Memos.findAll";
         if (pin) {
             namedQuery = "Memos.findPinned";
@@ -69,8 +77,8 @@ public class MemoResource {
     }
 
     @GET
-    @Path("{pin}/{keyword}")
-    public List<Memo> getByKeyword(String pin, String keyword) {
+    @Path("pin/{pin}/{keyword}")
+    public List<Memo> getByPingFlagAndKeyword(String pin, String keyword) {
         if (keyword.startsWith("tag:")) {
             String tagSearch = keyword.substring(4);
             System.out.println(tagSearch);
@@ -89,7 +97,7 @@ public class MemoResource {
     }
 
     @GET
-    @Path("{id}")
+    @Path("id/{id}")
     public Memo getSingle(Integer id) {
         Memo entity = entityManager.find(Memo.class, id);
         if (entity == null) {
