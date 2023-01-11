@@ -9,11 +9,11 @@
 
 = https://github.com/tedwon/quokka[Ted's Quokka Project]
 
-== Simple Memo App based on Quarkus with Java and React Next.js with TypeScript
+==
 
-== Quokka Projects
+== https://github.com/tedwon/quokka[Quokka Project]
 
-https://github.com/tedwon/quokka
+https://github.com/tedwon/quokka[Quokka Project] is a simple Memo App based on Quarkus with Java and React Next.js with TypeScript.
 
 
 === https://github.com/tedwon/quokka/tree/main/quokka-backend[Quokka Backend Project]
