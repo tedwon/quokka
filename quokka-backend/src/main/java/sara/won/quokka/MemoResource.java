@@ -34,15 +34,17 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class MemoResource {
-    private static final Logger LOGGER = Logger.getLogger(MemoResource.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(MemoResource.class);
+
+    @Inject
+    MemoService memoService;
 
     @Inject
     EntityManager entityManager;
 
     @GET
     public List<Memo> get() {
-        return entityManager.createNamedQuery("Memos.findAll", Memo.class)
-                .getResultList();
+        return memoService.getAllMemos();
     }
 
     @GET
