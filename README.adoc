@@ -17,15 +17,15 @@ https://github.com/tedwon/quokka[Quokka Project] is a simple Memo App based on Q
 
 === https://github.com/tedwon/quokka/tree/main/quokka-backend[Quokka Backend Project]
 
-https://github.com/tedwon/quokka/tree/main/quokka-backend[Quokka Backend project] is built on https://quarkus.io/[Quarkus]. https://hub.docker.com/_/postgres[PostgreSQL] provide the underlying database.
+https://github.com/tedwon/quokka/tree/main/quokka-backend[Quokka Backend project] is built on https://quarkus.io/[Quarkus].
 
 
-=== https://github.com/tedwon/quokka/tree/main/quokka-frontend[Quokka Frontend] Project
+=== https://github.com/tedwon/quokka/tree/main/quokka-frontend[Quokka Frontend Project]
 
 
 
 
-=== https://hub.docker.com/_/postgres[Quokka DB] Project
+=== Quokka DB based on https://hub.docker.com/_/postgres[PostgreSQL]
 
 https://hub.docker.com/_/postgres[PostgreSQL] provide the underlying database.
 
