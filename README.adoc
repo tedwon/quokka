@@ -16,9 +16,9 @@
 https://github.com/tedwon/quokka
 
 
-=== Quokka Backend Project
+=== https://github.com/tedwon/quokka/tree/main/quokka-backend[Quokka Backend Project]
 
-https://github.com/tedwon/quokka/tree/main/quokka-backend
+https://github.com/tedwon/quokka/tree/main/quokka-backend[Quokka Backend project] is built on https://quarkus.io/[Quarkus]. https://hub.docker.com/_/postgres[PostgreSQL] provide the underlying database.
 
 
 === Quokka Frontend Project
