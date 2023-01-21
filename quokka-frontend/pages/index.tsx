@@ -173,7 +173,7 @@ function CreateMemo(props: {
                         label="Tags"
                         variant="outlined"
                         fullWidth
-                        defaultValue=""
+                        defaultValue="eng,memo,"
                         onChange={event => setTags(event.target.value)}
                         onMouseEnter={event => event.target}
                     />
