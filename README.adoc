@@ -86,3 +86,7 @@ docker push tedwon/quokka-backend:latest
 
 docker push tedwon/quokka-frontend:latest
 ----
+
+== Quarkus Dev UI
+
+http://localhost:8080/q/dev/
