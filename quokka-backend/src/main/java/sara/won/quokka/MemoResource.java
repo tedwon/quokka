@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * See https://quarkus.io/guides/hibernate-orm
  */
-@Path("/quokka/memo")
+@Path("/quokka/api/v1/memo")
 @ApplicationScoped
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
