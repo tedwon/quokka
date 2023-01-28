@@ -18,24 +18,24 @@ public class MemosEndpointTest {
         // Delete test data
         try {
             final int idSara = (int) ((ArrayList<?>) given()
-                    .when().get("/quokka/memo/search/Meet Sara at school at 2:45").getBody().jsonPath().get("id")).get(0);
+                    .when().get("/quokka/api/v1/memo/search/Meet Sara at school at 2:45").getBody().jsonPath().get("id")).get(0);
             // Delete
             given()
-                    .when().delete("/quokka/memo/" + idSara)
+                    .when().delete("/quokka/api/v1/memo/" + idSara)
                     .then()
                     .statusCode(204);
 
             final int idNara = (int) ((ArrayList<?>) given()
-                    .when().get("/quokka/memo/search/Meet Nara at school at 2:45").getBody().jsonPath().get("id")).get(0);
+                    .when().get("/quokka/api/v1/memo/search/Meet Nara at school at 2:45").getBody().jsonPath().get("id")).get(0);
             given()
-                    .when().delete("/quokka/memo/" + idNara)
+                    .when().delete("/quokka/api/v1/memo/" + idNara)
                     .then()
                     .statusCode(204);
 
             final int idSaraNara = (int) ((ArrayList<?>) given()
-                    .when().get("/quokka/memo/search/Meet Sara and Katie at school at 2:45").getBody().jsonPath().get("id")).get(0);
+                    .when().get("/quokka/api/v1/memo/search/Meet Sara and Katie at school at 2:45").getBody().jsonPath().get("id")).get(0);
             given()
-                    .when().delete("/quokka/memo/" + idSaraNara)
+                    .when().delete("/quokka/api/v1/memo/" + idSaraNara)
                     .then()
                     .statusCode(204);
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class MemosEndpointTest {
                         "}")
                 .contentType("application/json")
                 .when()
-                .post("/quokka/memo")
+                .post("/quokka/api/v1/memo")
                 .then()
                 .statusCode(201)
                 .body("title", containsString("Pick up Sara"));
@@ -68,7 +68,7 @@ public class MemosEndpointTest {
                         "}")
                 .contentType("application/json")
                 .when()
-                .post("/quokka/memo")
+                .post("/quokka/api/v1/memo")
                 .then()
                 .statusCode(201);
 
@@ -81,13 +81,13 @@ public class MemosEndpointTest {
                         "    \"pin\": true\n" +
                         "}")
                 .contentType("application/json")
-                .post("/quokka/memo")
+                .post("/quokka/api/v1/memo")
                 .then()
                 .statusCode(409);
 
         // Retrieve all data
         given()
-                .when().get("/quokka/memo")
+                .when().get("/quokka/api/v1/memo")
                 .then()
                 .statusCode(200)
                 .body(
@@ -99,7 +99,7 @@ public class MemosEndpointTest {
 
         // Search by keyword
         given()
-                .when().get("/quokka/memo/search/Meet Sara at school at 2:45")
+                .when().get("/quokka/api/v1/memo/search/Meet Sara at school at 2:45")
                 .then()
                 .statusCode(200)
                 .body(
@@ -111,7 +111,7 @@ public class MemosEndpointTest {
 
         // Search & Update
         final int idSara = (int) ((ArrayList<?>) given()
-                .when().get("/quokka/memo/search/Meet Sara at school at 2:45").getBody().jsonPath().get("id")).get(0);
+                .when().get("/quokka/api/v1/memo/search/Meet Sara at school at 2:45").getBody().jsonPath().get("id")).get(0);
         given()
                 .when()
                 .body("{\n" +
@@ -121,12 +121,12 @@ public class MemosEndpointTest {
                         "    \"pin\": true\n" +
                         "}")
                 .contentType("application/json")
-                .put("/quokka/memo/" + idSara)
+                .put("/quokka/api/v1/memo/" + idSara)
                 .then()
                 .statusCode(200);
 
         final int idNara = (int) ((ArrayList<?>) given()
-                .when().get("/quokka/memo/search/Meet Nara at school at 2:45").getBody().jsonPath().get("id")).get(0);
+                .when().get("/quokka/api/v1/memo/search/Meet Nara at school at 2:45").getBody().jsonPath().get("id")).get(0);
         given()
                 .when()
                 .body("{\n" +
@@ -136,13 +136,13 @@ public class MemosEndpointTest {
                         "    \"pin\": true\n" +
                         "}")
                 .contentType("application/json")
-                .put("/quokka/memo/" + idNara)
+                .put("/quokka/api/v1/memo/" + idNara)
                 .then()
                 .statusCode(409);
 
         // Retrieve
         given()
-                .when().get("/quokka/memo")
+                .when().get("/quokka/api/v1/memo")
                 .then()
                 .statusCode(200)
                 .body(
@@ -157,18 +157,18 @@ public class MemosEndpointTest {
 
         // Delete
         given()
-                .when().delete("/quokka/memo/" + idSara)
+                .when().delete("/quokka/api/v1/memo/" + idSara)
                 .then()
                 .statusCode(204);
 
         given()
-                .when().delete("/quokka/memo/" + idNara)
+                .when().delete("/quokka/api/v1/memo/" + idNara)
                 .then()
                 .statusCode(204);
 
         // Retrieve
         given()
-                .when().get("/quokka/memo")
+                .when().get("/quokka/api/v1/memo")
                 .then()
                 .statusCode(200)
                 .body(
