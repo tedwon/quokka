@@ -7,7 +7,7 @@
 :idseparator: -
 
 
-= https://github.com/tedwon/quokka[Ted's Quokka Project]
+= https://github.com/tedwon/quokka[Quokka Project]
 
 
 == https://github.com/tedwon/quokka[Quokka Project]

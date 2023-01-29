@@ -2,8 +2,6 @@
 :email: iamtedwon@gmail.com
 :toc: left
 :toclevels: 5
-:sectnums:
-:sectnumlevels: 5
 :icons: font
 :idprefix:
 :idseparator: -
@@ -24,12 +22,57 @@ https://github.com/tedwon/quokka-backend
 https://hub.docker.com/repository/docker/tedwon/quokka-backend
 
 
-=== Quokka Frontend Project
-
-https://github.com/tedwon/quokka-frontend
-
-https://hub.docker.com/repository/docker/tedwon/quokka-frontend
-
-=== Quokka DB Project
+==== Quokka DB Container
 
 https://hub.docker.com/_/postgres
+
+===== Run Quokka DB as a Container
+
+[source,bash,options="nowrap"]
+----
+docker run --rm=true -itd \
+           --name quokka-db \
+           -v /var/quokka_db_data:/var/lib/postgresql/data \
+           -e POSTGRES_USER=quokka \
+           -e POSTGRES_PASSWORD=quokka \
+           -e POSTGRES_DB=quokka_db \
+           -p 5432:5432 \
+           --network quokka_net \
+           postgres:latest
+----
+
+
+==== Build & Run Quokka Backend as a Container
+
+===== Build Quokka in JVM mode
+
+[source,bash,options="nowrap"]
+----
+./mvnw clean package
+
+docker build -f src/main/docker/Dockerfile.jvm -t tedwon/quokka-backend:latest .
+----
+
+
+===== Build Quokka in Native mode
+
+* https://quarkus.io/guides/building-native-image[Building a Native Executable - Quarkus]
+
+[source,bash,options="nowrap"]
+----
+./mvnw clean package -Pnative
+# or
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true
+
+docker build -f src/main/docker/Dockerfile.native -t tedwon/quokka-backend:latest .
+
+docker build -f src/main/docker/Dockerfile.native-micro -t tedwon/quokka-backend:latest .
+----
+
+
+===== Run Quokka as a Container
+
+[source,bash,options="nowrap"]
+----
+docker run -i --rm -p 8080:8080 --network quokka_net tedwon/quokka-backend:latest
+----
