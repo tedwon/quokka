@@ -25,7 +25,8 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Link from 'next/link'
+import Link from 'next/link';
+import Typography from '@mui/material/Typography';
 
 // https://www.typescriptlang.org/static/TypeScript%20Types-ae199d69aeecf7d4a2704a528d0fd3f9.png
 type Memo = {
@@ -58,7 +59,9 @@ function AppHead() {
     return (
         <div>
             <QuokkaAppHead></QuokkaAppHead>
-            <h1><Link href="https://github.com/tedwon/quokka" target="_blank">Quokka Memo App</Link></h1>
+            <Typography component="h1" variant="h5">
+                <Link href="https://github.com/tedwon/quokka" target="_blank">Quokka Memo App</Link>
+            </Typography>
             {clock}
         </div>
     );
