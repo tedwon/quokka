@@ -168,6 +168,7 @@ function CreateMemo(props: {
                         color="success"
                         rows={20}
                         defaultValue=""
+                        autoFocus
                         onChange={event => setBody(event.target.value)}
                         onMouseEnter={event => event.target}
                     />
@@ -399,6 +400,7 @@ function MemoTable(props: {
                         color="success"
                         rows={20}
                         value={body}
+                        autoFocus
                         onChange={event => setBody(event.target.value)}
                         onMouseEnter={event => event.target}
                     />
