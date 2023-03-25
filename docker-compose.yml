@@ -17,6 +17,7 @@ services:
     image: tedwon/quokka-backend:latest
     ports:
       - "8080:8080"
+      - "8443:8443"
     restart: always
   quokka-frontend:
     depends_on:
