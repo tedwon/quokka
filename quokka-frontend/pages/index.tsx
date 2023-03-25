@@ -59,10 +59,12 @@ function AppHead() {
     return (
         <div>
             <QuokkaAppHead></QuokkaAppHead>
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h4">
                 <Link href="https://github.com/tedwon/quokka" target="_blank">Quokka Memo App</Link>
             </Typography>
-            {clock}
+            <Typography component="h6" variant="h6">
+               {clock}
+            </Typography>
         </div>
     );
 }
