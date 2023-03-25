@@ -224,6 +224,7 @@ function SearchBox(props: {
                     variant="outlined"
                     fullWidth
                     defaultValue=""
+                    autoFocus
                     onMouseEnter={event => event.target}
                 />
             </form>
