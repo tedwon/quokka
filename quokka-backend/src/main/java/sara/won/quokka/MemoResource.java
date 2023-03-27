@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.jboss.logging.Logger;
 import sara.won.quokka.models.Memo;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -49,6 +50,7 @@ public class MemoResource {
 
     @GET
     @Path("export/{a:text|txt}")
+    @RolesAllowed("admin")
     @Produces(MediaType.TEXT_PLAIN)
     public String getAsText() {
         StringBuilder result = new StringBuilder();
