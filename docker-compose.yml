@@ -2,6 +2,7 @@ version: "3.9"
 services:
   quokka-db:
     image: postgres:latest
+    container_name: "quokka-db"
     volumes:
       - /var/quokka_db_data:/var/lib/postgresql/data
     ports:
@@ -15,6 +16,7 @@ services:
     depends_on:
       - quokka-db
     image: tedwon/quokka-backend:latest
+    container_name: "quokka-backend"
     ports:
       - "8080:8080"
       - "8443:8443"
@@ -23,6 +25,7 @@ services:
     depends_on:
       - quokka-backend
     image: tedwon/quokka-frontend:latest
+    container_name: "quokka-frontend"
     ports:
       - "3000:3000"
     restart: always
