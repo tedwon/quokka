@@ -3,6 +3,8 @@ package sara.won.quokka;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.jboss.logging.Logger;
 import sara.won.quokka.models.Memo;
 
@@ -23,7 +25,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -44,13 +51,38 @@ public class MemoResource {
     EntityManager entityManager;
 
     @GET
+//    @RolesAllowed("admin")
     public List<Memo> get() {
         return memoService.getAllMemos();
     }
 
     @GET
-    @Path("export/{a:text|txt}")
+    @Path("backup")
     @RolesAllowed("admin")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String backup() {
+        List<Memo> allMemos = memoService.getAllMemos();
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        final String allMemosToJson = gson.toJson(allMemos);
+
+        // Write search results to a file
+        final String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+        final String outputPath = "quokka.backup." + formattedDateTime;
+        java.nio.file.Path outputFilePath = java.nio.file.Path.of(outputPath);
+        try {
+            Files.write(outputFilePath, allMemosToJson.getBytes(StandardCharsets.UTF_8));
+            System.out.println("File written successfully");
+        } catch (IOException e) {
+            System.out.println("Error writing file");
+            e.printStackTrace();
+        }
+        return "SUCCESS";
+    }
+
+    @GET
+    @Path("export/{a:text|txt}")
+//    @RolesAllowed("admin")
     @Produces(MediaType.TEXT_PLAIN)
     public String getAsText() {
         StringBuilder result = new StringBuilder();

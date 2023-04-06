@@ -1,3 +1,6 @@
+
+quokka.backup.*
+
 #Maven
 target/
 pom.xml.tag
