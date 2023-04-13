@@ -138,6 +138,17 @@ public class Memo {
 
     }
 
+    public String exportToStringForEBook() {
+        final StringBuilder sb = new StringBuilder();
+        if (title != null && !title.trim().equals("")) {
+            sb.append(title);
+            sb.append("\n\n");
+        }
+        sb.append(body);
+        return sb.toString();
+
+    }
+
     @Override
     public String toString() {
         return "Memo{" +

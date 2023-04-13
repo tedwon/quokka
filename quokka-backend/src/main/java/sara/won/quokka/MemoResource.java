@@ -107,7 +107,7 @@ public class MemoResource {
                 .setParameter("tagSearch", "%ebook%")
                 .getResultList();
         resultList.forEach(memo -> {
-            result.append(memo.exportToString());
+            result.append(memo.exportToStringForEBook());
         });
         return result.toString();
     }
