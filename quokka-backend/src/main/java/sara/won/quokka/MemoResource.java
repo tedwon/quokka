@@ -94,6 +94,10 @@ public class MemoResource {
         return result.toString();
     }
 
+    /**
+     * Filter memos for ebook generation
+     * @return ebook memos
+     */
     @GET
     @Path("ebook")
     @Produces(MediaType.TEXT_PLAIN)
