@@ -95,6 +95,20 @@ public class MemoResource {
     }
 
     @GET
+    @Path("ebook")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getAsTextForEBookGeneration() {
+        StringBuilder result = new StringBuilder();
+        List<Memo> resultList = entityManager.createNamedQuery("Memos.findByTag")
+                .setParameter("tagSearch", "%ebook%")
+                .getResultList();
+        resultList.forEach(memo -> {
+            result.append(memo.exportToString());
+        });
+        return result.toString();
+    }
+
+    @GET
     @Path("search/{keyword}")
     public List<Memo> getByKeyword(String keyword) {
         return entityManager.createNamedQuery("Memos.findByKeyword")
