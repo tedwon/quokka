@@ -1,7 +1,7 @@
 :author: Ted Won
 :email: iamtedwon@gmail.com
 :toc: left
-:toclevels: 5
+:toclevels: 1
 :icons: font
 :idprefix:
 :idseparator: -
@@ -12,7 +12,9 @@
 
 == https://github.com/tedwon/quokka[Quokka Project]
 
-https://github.com/tedwon/quokka[Quokka Project] is a simple Memo App based on Quarkus with Java and React Next.js with TypeScript.
+https://github.com/tedwon/quokka[Quokka] is a simple Memo App.
+
+https://github.com/tedwon/quokka[Quokka] is implemented in Quarkus with Java for backend and React Next.js with TypeScript for frontend.
 
 
 === https://github.com/tedwon/quokka/tree/main/quokka-backend[Quokka Backend Project]
@@ -25,12 +27,13 @@ https://github.com/tedwon/quokka/tree/main/quokka-backend[Quokka Backend project
 
 
 
-=== Quokka DB based on https://hub.docker.com/_/postgres[PostgreSQL]
+=== Quokka DB
+Quokka DB is https://hub.docker.com/_/postgres[PostgreSQL].
 
-https://hub.docker.com/_/postgres[PostgreSQL] provide the underlying database.
+https://hub.docker.com/_/postgres[PostgreSQL] provides the underlying database.
 
 
-== Run Quokka with Docker Compose
+== Start Quokka with Docker Compose
 
 [source,bash,options="nowrap"]
 ----
@@ -46,14 +49,14 @@ docker-compose -f docker-compose.yml down
 ----
 
 
-=== Run Quokka Projects with Docker
+== Start Quokka with Docker
 
 [source,bash,options="nowrap"]
 ----
 docker network create quokka_net
 
-sudo mkdir /private/var/quokka_db_data
-sudo chown -R <user>:<group> /private/var/quokka_db_data
+sudo mkdir /var/quokka_db_data
+sudo chown -R <user>:<group> /var/quokka_db_data
 ls -al /var/quokka_db_data
 docker run --rm=true -itd \
            --name quokka-db \
