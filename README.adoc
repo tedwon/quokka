@@ -28,12 +28,12 @@ https://github.com/tedwon/quokka/tree/main/quokka-backend[Quokka Backend project
 
 
 === Quokka DB
-Quokka DB is https://hub.docker.com/_/postgres[PostgreSQL].
-
-https://hub.docker.com/_/postgres[PostgreSQL] provides the underlying database.
+Quokka DB is on https://hub.docker.com/_/postgres[PostgreSQL]. https://hub.docker.com/_/postgres[PostgreSQL] provides the underlying database.
 
 
-== Start Quokka with Docker Compose
+== Start Quokka
+
+=== Start Quokka with Docker Compose
 
 [source,bash,options="nowrap"]
 ----
@@ -41,7 +41,7 @@ docker-compose -f docker-compose.yml up -d
 ----
 
 
-=== Stop Quokka with Docker Compose
+==== Stop Quokka with Docker Compose
 
 [source,bash,options="nowrap"]
 ----
@@ -49,7 +49,7 @@ docker-compose -f docker-compose.yml down
 ----
 
 
-== Start Quokka with Docker
+=== Start Quokka with Docker
 
 [source,bash,options="nowrap"]
 ----
@@ -78,7 +78,9 @@ docker build -t tedwon/quokka-frontend:latest .
 docker run -p 3000:3000 --network quokka_net tedwon/quokka-frontend:latest
 ----
 
-== Push Quokka projects to Docker Hub
+== Develop Quokka
+
+=== Push Quokka projects to Docker Hub
 
 * https://hub.docker.com/repository/docker/tedwon/quokka-backend
 * https://hub.docker.com/repository/docker/tedwon/quokka-backend
@@ -90,6 +92,6 @@ docker push tedwon/quokka-backend:latest
 docker push tedwon/quokka-frontend:latest
 ----
 
-== Quarkus Dev UI
+=== Quarkus Dev UI
 
 http://localhost:8080/q/dev/
