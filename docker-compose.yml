@@ -1,5 +1,20 @@
 version: "3.9"
 services:
+  quokka-keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: "quokka-keycloak"
+    command:
+      - start --optimized --hostname-strict=false --https-key-store-file=/etc/keycloak-keystore.jks
+      - --import-realm
+    environment:
+      KEYCLOAK_ADMIN: quokka
+      KEYCLOAK_ADMIN_PASSWORD: quokka
+    volumes:
+      - ./quokka-backend/config/keycloak-keystore.jks:/etc/keycloak-keystore.jks
+      - ./quokka-backend/config/quarkus-realm.json:/opt/keycloak/data/import/realm.json
+    ports:
+      - "8443:8443"
+    restart: always
   quokka-db:
     image: postgres:latest
     container_name: "quokka-db"
@@ -15,11 +30,12 @@ services:
   quokka-backend:
     depends_on:
       - quokka-db
+      - quokka-keycloak
     image: tedwon/quokka-backend:latest
     container_name: "quokka-backend"
     ports:
       - "8080:8080"
-      - "8443:8443"
+      - "8543:8443"
     restart: always
   quokka-frontend:
     depends_on:

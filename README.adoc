@@ -76,6 +76,27 @@ docker run -i --rm -p 8080:8080 --network quokka_net tedwon/quokka-backend:lates
 cd quokka-frontend
 docker build -t tedwon/quokka-frontend:latest .
 docker run -p 3000:3000 --network quokka_net tedwon/quokka-frontend:latest
+
+# Using OpenID Connect (OIDC) and Keycloak to Centralize Authorization - Quarkus
+# https://quarkus.io/guides/security-keycloak-authorization
+#docker run --rm=true -itd \
+#           --name quokka-keycloak \
+#           -e KEYCLOAK_ADMIN=admin \
+#		   -e KEYCLOAK_ADMIN_PASSWORD=admin \
+#           -p 8088:8088 \
+#           --network quokka_net \
+#quay.io/keycloak/keycloak:latest start-dev
+docker run --rm=true -it \
+           --name quokka-keycloak \
+           --network quokka_net \
+		   -e KEYCLOAK_ADMIN=quokka \
+		   -e KEYCLOAK_ADMIN_PASSWORD=quokka \
+		   -p 8443:8443 \
+		   -v "$(pwd)"/quokka-backend/config/keycloak-keystore.jks:/etc/keycloak-keystore.jks \
+		   -v "$(pwd)"/quokka-backend/config/quarkus-realm.json:/opt/keycloak/data/import/realm.json \
+		   quay.io/keycloak/keycloak:latest start --import-realm \
+		   --optimized --hostname-strict=false --https-key-store-file=/etc/keycloak-keystore.jks
+
 ----
 
 == Develop Quokka
