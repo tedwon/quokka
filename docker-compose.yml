@@ -17,7 +17,7 @@ services:
       - "8443:8443"
     restart: always
   quokka-db:
-    image: postgres:latest
+    image: quay.io/debezium/postgres:15
     container_name: "quokka-db"
     volumes:
       - /var/quokka_db_data:/var/lib/postgresql/data

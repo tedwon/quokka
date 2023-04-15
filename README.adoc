@@ -67,7 +67,10 @@ docker run --rm=true -itd \
            -e POSTGRES_DB=quokka_db \
            -p 5432:5432 \
            --network quokka_net \
-postgres:latest
+quay.io/debezium/postgres:15
+#postgres:latest
+
+
 
 cd quokka-backend
 ./mvnw clean package
