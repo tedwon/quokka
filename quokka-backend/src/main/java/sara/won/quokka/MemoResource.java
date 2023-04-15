@@ -25,9 +25,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -72,7 +75,7 @@ public class MemoResource {
         java.nio.file.Path outputFilePath = java.nio.file.Path.of(outputPath);
         try {
             Files.write(outputFilePath, allMemosToJson.getBytes(StandardCharsets.UTF_8));
-            System.out.println("File written successfully");
+            System.out.println("File written successfully in " + Paths.get("").toAbsolutePath().toString() + File.separator + outputFilePath);
         } catch (IOException e) {
             System.out.println("Error writing file");
             e.printStackTrace();
