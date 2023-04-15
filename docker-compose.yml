@@ -7,6 +7,7 @@ services:
       - start --optimized --hostname-strict=false --https-key-store-file=/etc/keycloak-keystore.jks
       - --import-realm
     environment:
+      TZ: Australia/Brisbane
       KEYCLOAK_ADMIN: quokka
       KEYCLOAK_ADMIN_PASSWORD: quokka
     volumes:
@@ -24,6 +25,7 @@ services:
       - "5432:5432"
     restart: always
     environment:
+      TZ: Australia/Brisbane
       POSTGRES_USER: quokka
       POSTGRES_PASSWORD: quokka
       POSTGRES_DB: quokka_db
@@ -33,6 +35,8 @@ services:
       - quokka-keycloak
     image: tedwon/quokka-backend:latest
     container_name: "quokka-backend"
+    environment:
+      TZ: Australia/Brisbane
     ports:
       - "8080:8080"
       - "8543:8443"
@@ -42,6 +46,8 @@ services:
       - quokka-backend
     image: tedwon/quokka-frontend:latest
     container_name: "quokka-frontend"
+    environment:
+      TZ: Australia/Brisbane
     ports:
       - "3000:3000"
     restart: always

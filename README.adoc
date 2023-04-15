@@ -61,6 +61,7 @@ ls -al /var/quokka_db_data
 docker run --rm=true -itd \
            --name quokka-db \
            -v /var/quokka_db_data:/var/lib/postgresql/data \
+           -e TZ=Australia/Brisbane \
            -e POSTGRES_USER=quokka \
            -e POSTGRES_PASSWORD=quokka \
            -e POSTGRES_DB=quokka_db \
@@ -71,11 +72,11 @@ postgres:latest
 cd quokka-backend
 ./mvnw clean package
 docker build -f src/main/docker/Dockerfile.jvm -t tedwon/quokka-backend:latest .
-docker run -i --rm -p 8080:8080 --network quokka_net tedwon/quokka-backend:latest
+docker run -i --rm -e TZ=Australia/Brisbane -p 8080:8080 --network quokka_net tedwon/quokka-backend:latest
 
 cd quokka-frontend
 docker build -t tedwon/quokka-frontend:latest .
-docker run -p 3000:3000 --network quokka_net tedwon/quokka-frontend:latest
+docker run -i -rm -e TZ=Australia/Brisbane -p 3000:3000 --network quokka_net tedwon/quokka-frontend:latest
 
 # Using OpenID Connect (OIDC) and Keycloak to Centralize Authorization - Quarkus
 # https://quarkus.io/guides/security-keycloak-authorization
@@ -89,6 +90,7 @@ docker run -p 3000:3000 --network quokka_net tedwon/quokka-frontend:latest
 docker run --rm=true -it \
            --name quokka-keycloak \
            --network quokka_net \
+           -e TZ=Australia/Brisbane \
 		   -e KEYCLOAK_ADMIN=quokka \
 		   -e KEYCLOAK_ADMIN_PASSWORD=quokka \
 		   -p 8443:8443 \
