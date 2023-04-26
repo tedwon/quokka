@@ -1,0 +1,13 @@
+# ansible-playbook playbook.yaml
+# ansible-playbook -i inventory.yaml playbook.yaml
+
+- name: quokka play
+  hosts: localhost
+  tasks:
+    - name: Stop quokka containers
+      ansible.builtin.command: |
+        docker-compose -f ../docker-compose.yml down
+      ignore_errors: yes
+    - name: Start quokka containers
+      ansible.builtin.command: |
+        docker-compose -f ../docker-compose.yml up -d --remove-orphans

@@ -1,0 +1,14 @@
+frontend-servers:
+  hosts:
+    frontend-server01:
+      ansible_host: 127.0.0.1
+
+backend-servers:
+  hosts:
+    backend-server01:
+      ansible_host: 127.0.0.1
+
+quokka:
+  children:
+   frontend-servers:
+   backend-servers:
