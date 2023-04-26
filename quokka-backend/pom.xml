@@ -37,6 +37,11 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+<!--  Deploying on OpenShift  https://quarkus.io/guides/deploying-to-openshift-->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-openshift</artifactId>
+    </dependency>
 <!--    https://github.com/tedwon/quokka/issues/23-->
 <!--    https://products.fileformat.com/ebook/java/epublib/-->
 <!--    <dependency>-->
