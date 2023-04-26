@@ -121,3 +121,151 @@ docker push tedwon/quokka-frontend:latest
 === Quarkus Dev UI
 
 http://localhost:8080/q/dev/
+
+
+=== Run Debezium
+
+[source,bash,options="nowrap"]
+----
+docker run -it --rm --name zookeeper -p 2181:2181 -p 2888:2888 -p 3888:3888 quay.io/debezium/zookeeper:2.1
+
+docker run -it --rm --name kafka -p 9092:9092 --link zookeeper:zookeeper quay.io/debezium/kafka:2.1
+
+docker run --rm=true -it \
+           --name debezium-quokka-db \
+           --hostname quokka-db \
+           -v /var/quokka_db_data:/var/lib/postgresql/data \
+           -e TZ=Australia/Brisbane \
+           -e POSTGRES_USER=quokka \
+           -e POSTGRES_PASSWORD=quokka \
+           -e POSTGRES_DB=quokka_db \
+           -p 5432:5432 \
+quay.io/debezium/postgres:15
+
+docker run -it --rm --name debezium-quokka-db_psql_client \
+--link debezium-quokka-db:debezium-quokka-db \
+-e PGOPTIONS="--search_path=quokka" \
+-e PGPASSWORD=quokka quay.io/debezium/postgres:15 \
+psql -p 5432 -h quokka_db quokka_db -U quokka
+
+# docker run -it --rm --name mysqlterm --link mysql --rm mysql:8.0 sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'
+
+docker run -it --rm --name connect -p 8083:8083 -e GROUP_ID=1 -e CONFIG_STORAGE_TOPIC=my_connect_configs \
+-e OFFSET_STORAGE_TOPIC=my_connect_offsets -e STATUS_STORAGE_TOPIC=my_connect_statuses \
+--link kafka:kafka --link debezium-quokka-db:debezium-quokka-db quay.io/debezium/connect:2.1
+
+
+curl -H "Accept:application/json" localhost:8083/
+http://localhost:8083/
+
+curl -H "Accept:application/json" localhost:8083/connectors/
+http://localhost:8083/connectors/
+
+
+curl -i -X GET -H "Accept:application/json" localhost:8083/connectors/inventory-connector
+http://localhost:8083/connectors/quokka-connector
+
+docker run -it --rm --name watcher --link zookeeper:zookeeper --link kafka:kafka quay.io/debezium/kafka:2.1 watch-topic -a -k quokka.quokka_db.Memo
+----
+
+
+==== Start Zookeeper
+
+[source,bash,options="nowrap"]
+----
+docker network create debezium-net
+docker run -it --rm --name zookeeper -e TZ=Australia/Brisbane --network debezium-net -p 2181:2181 -p 2888:2888 -p 3888:3888 quay.io/debezium/zookeeper:2.1
+----
+
+
+==== Start Kafka
+
+[source,bash,options="nowrap"]
+----
+docker run -it --rm --name kafka -e TZ=Australia/Brisbane --network debezium-net -p 9092:9092 quay.io/debezium/kafka:2.1
+
+----
+
+==== Start a PostgreSQL database
+
+[source,bash,options="nowrap"]
+----
+docker stop quokka-db
+docker run --rm=true -it \
+           --name debezium-quokka-db \
+           -v /var/quokka_db_data:/var/lib/postgresql/data \
+           -e TZ=Australia/Brisbane \
+           -e POSTGRES_USER=quokka \
+           -e POSTGRES_PASSWORD=quokka \
+           -e POSTGRES_DB=quokka_db \
+           -p 5432:5432 \
+quay.io/debezium/postgres:15
+----
+
+==== Start a PostgreSQL command line client
+
+[source,bash,options="nowrap"]
+----
+
+----
+
+==== Start Kafka Connect
+
+[source,bash,options="nowrap"]
+----
+
+docker run -it --rm --name connect -p 8083:8083 -e GROUP_ID=1 -e CONFIG_STORAGE_TOPIC=my_connect_configs \
+-e OFFSET_STORAGE_TOPIC=my_connect_offsets -e STATUS_STORAGE_TOPIC=my_connect_statuses \
+--link kafka:kafka --link debezium-quokka-db:debezium-quokka-db quay.io/debezium/connect:2.1
+
+----
+
+
+==== Deploying the PostgreSQL connector
+
+[source,bash,options="nowrap"]
+----
+{
+  "name": "quokka-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "tasks.max": "1",
+    "database.hostname": "127.0.0.1",
+    "database.port": "5432",
+    "database.user": "quokka",
+    "database.password": "quokka",
+    "database.dbname": "quokka_db",
+    "database.server.id": "26",
+    "topic.prefix": "quokka",
+    "table.include.list": "public.quokka",
+    "database.include.list": "quokka",
+    "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
+    "schema.history.internal.kafka.topic": "schema-changes.quokka"
+  }
+}
+----
+
+
+[source,bash,options="nowrap"]
+----
+curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d '{"name":"quokka-connector","config":{"connector.class":"io.debezium.connector.postgresql.PostgresConnector","tasks.max":"1","database.hostname":"127.0.0.1","database.port":"5432","database.user":"quokka","database.password":"quokka","database.dbname":"quokka_db","database.server.id":"26","topic.prefix":"quokka","table.include.list":"public.quokka","database.include.list":"quokka","schema.history.internal.kafka.bootstrap.servers":"kafka:9092","schema.history.internal.kafka.topic":"schema-changes.quokka"}}'
+
+curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d '{
+  "name": "quokka-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "tasks.max": "1",
+    "database.hostname": "debezium-quokka-db",
+    "database.port": "5432",
+    "database.user": "quokka",
+    "database.password": "quokka",
+    "database.dbname": "quokka_db",
+    "database.server.id": "26",
+    "topic.prefix": "quokka",
+    "table.include.list": "public.quokka",
+    "database.include.list": "quokka",
+    "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
+    "schema.history.internal.kafka.topic": "schema-changes.quokka"
+  }
+}'
+----
