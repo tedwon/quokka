@@ -3,9 +3,9 @@ package sara.won.quokka;
 import io.quarkus.runtime.StartupEvent;
 import sara.won.quokka.models.User;
 
-import javax.enterprise.event.Observes;
-import javax.inject.Singleton;
-import javax.transaction.Transactional;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Singleton;
+import jakarta.transaction.Transactional;
 
 @Singleton
 public class Startup {

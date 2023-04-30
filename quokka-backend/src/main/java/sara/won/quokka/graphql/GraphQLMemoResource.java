@@ -7,7 +7,7 @@ import org.jboss.logging.Logger;
 import sara.won.quokka.MemoService;
 import sara.won.quokka.models.Memo;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 
 /**
