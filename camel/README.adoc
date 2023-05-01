@@ -1,0 +1,17 @@
+== Run Backup with Camel CLI
+
+=== Prerequisites
+
+* Install Camel CLI
+
+[source,bash,options="nowrap"]
+----
+camel init RunBackupWithCamelCLI.java
+
+# Edit
+
+camel run RunBackupWithCamelCLI.java
+
+# Open separate terminal
+camel get
+----
