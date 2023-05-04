@@ -85,7 +85,7 @@ public class MemoResource {
 
     @GET
     @Path("export/{a:text|txt}")
-//    @RolesAllowed("admin")
+    @RolesAllowed("admin")
     @Produces(MediaType.TEXT_PLAIN)
     public String getAsText() {
         StringBuilder result = new StringBuilder();
