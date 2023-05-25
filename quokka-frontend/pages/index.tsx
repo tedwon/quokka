@@ -347,7 +347,7 @@ function MemoTable(props: {
                             <TableRow
                                 key={idx}
                                 sx={{'&:last-child td, &:last-child th': {fontSize: "0.8rem", border: 0}}}
-                                onClick={() => {
+                                onDoubleClick={() => {
                                     handleClickOpen(memo);
                                 }}
                             >
