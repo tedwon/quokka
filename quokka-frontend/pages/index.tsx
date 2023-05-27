@@ -179,7 +179,7 @@ function CreateMemo(props: {
                         label="Tags"
                         variant="outlined"
                         fullWidth
-                        defaultValue="eng,memo,"
+                        defaultValue="CY23Q2,CY23Q2_22-26_May,current,today,"
                         onChange={event => setTags(event.target.value)}
                         onMouseEnter={event => event.target}
                     />
@@ -352,7 +352,7 @@ function MemoTable(props: {
                                 }}
                             >
                                 <TableCell component="th" scope="row" variant="body">
-                                    <b>Pin{memo.pin === true ? <Checkbox {...label} disabled checked /> : <Checkbox {...label} disabled />}</b>
+                                    <b>{memo.pin === true ? <Checkbox {...label} disabled checked /> : ''}</b>
                                     <br/>
                                     <b>{memo.title}</b>
                                     <br/>
