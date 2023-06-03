@@ -49,12 +49,29 @@ const Transition = React.forwardRef(function Transition(
 
 function AppHead() {
     // clock
-    const [clock, setClock] = useState<string>()
+    const [clock, setClock] = useState<string>();
+    const [myAge, setMyAge] = useState<string>();
     setInterval(updateClock, 1000);
 
     function updateClock() {
         setClock(currentDateTime);
     }
+
+    useEffect(() => {
+        fetch(BACKEND_SERVER_URL + "/info/myage")
+            .then(res => res.text())
+            .then((myAge) => {
+                console.log(myAge);
+                    setMyAge(myAge);
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                error => {
+                    console.log(error);
+                }
+            );
+    }, [])
 
     return (
         <div>
@@ -63,7 +80,10 @@ function AppHead() {
                 <Link href="https://github.com/tedwon/quokka" target="_blank">Quokka Memo App</Link>
             </Typography>
             <Typography component="h6" variant="h6">
-               {clock}
+                {clock}
+            </Typography>
+            <Typography component="h6" variant="h6">
+                {myAge}
             </Typography>
         </div>
     );
@@ -334,7 +354,7 @@ function MemoTable(props: {
             )
     };
 
-    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+    const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
 
     return (
@@ -352,7 +372,7 @@ function MemoTable(props: {
                                 }}
                             >
                                 <TableCell component="th" scope="row" variant="body">
-                                    <b>{memo.pin === true ? <Checkbox {...label} disabled checked /> : ''}</b>
+                                    <b>{memo.pin === true ? <Checkbox {...label} disabled checked/> : ''}</b>
                                     <br/>
                                     <b>{memo.title}</b>
                                     <br/>
