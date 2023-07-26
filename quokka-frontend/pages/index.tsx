@@ -95,7 +95,7 @@ function CreateMemo(props: {
     const [title, setTitle] = useState<string>('');
     const [body, setBody] = useState<string>('');
     const [tags, setTags] = useState<string>('');
-    const [pin, setPin] = useState<boolean>(false);
+    const [pin, setPin] = useState<boolean>(true);
 
     const handlePinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPin(event.target.checked);
@@ -199,7 +199,7 @@ function CreateMemo(props: {
                         label="Tags"
                         variant="outlined"
                         fullWidth
-                        defaultValue="CY23Q2,CY23Q2_22-26_May,current,today,"
+                        defaultValue="eng,idea,"
                         onChange={event => setTags(event.target.value)}
                         onMouseEnter={event => event.target}
                     />
