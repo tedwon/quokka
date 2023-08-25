@@ -188,11 +188,30 @@ public class MemoResource {
             throw new WebApplicationException("Memo with id of " + id + " does not exist.", 404);
         }
 
-        entity.setTitle(memo.getTitle());
-        entity.setBody(memo.getBody());
-        entity.setTags(memo.getTags());
-        entity.setPin(memo.getPin());
-        entity.setDate(new Date());
+//        entity.setTitle(memo.getTitle());
+//        entity.setBody(memo.getBody());
+//        entity.setTags(memo.getTags());
+//        entity.setPin(memo.getPin());
+//        entity.setDate(new Date());
+
+        /**
+         * Update entity.
+         *
+         * See https://jakarta.ee/specifications/persistence/3.1/apidocs/jakarta.persistence/jakarta/persistence/entitymanager#merge(T)
+         *
+         * Hibernate:
+         *     update
+         *         Memo
+         *     set
+         *         body=?,
+         *         date=?,
+         *         pin=?,
+         *         tags=?,
+         *         title=?
+         *     where
+         *         id=?
+         */
+        entityManager.merge(memo);
 
         return entity;
     }
