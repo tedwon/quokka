@@ -211,6 +211,10 @@ public class MemoResource {
          *     where
          *         id=?
          */
+        // set updated time
+        memo.setDate(new Date());
+
+        // update entity
         entityManager.merge(memo);
 
         return entity;
