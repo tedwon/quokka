@@ -48,6 +48,8 @@ docker run --rm=true -itd \
 
 [source,bash,options="nowrap"]
 ----
+cd ~/quokka/quokka-backend
+
 ./mvnw clean package
 
 docker build -f src/main/docker/Dockerfile.jvm -t tedwon/quokka-backend:latest .
