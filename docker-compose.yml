@@ -1,44 +1,12 @@
-version: "3.9"
+# version: "3.9"
 services:
-  quokka-keycloak:
-    image: quay.io/keycloak/keycloak:latest
-    container_name: "quokka-keycloak"
-    command:
-      - start --optimized --hostname-strict=false --https-key-store-file=/etc/keycloak-keystore.jks
-      - --import-realm
-    environment:
-      TZ: Australia/Brisbane
-      KEYCLOAK_ADMIN: quokka
-      KEYCLOAK_ADMIN_PASSWORD: quokka
-    volumes:
-      - ./quokka-backend/config/keycloak-keystore.jks:/etc/keycloak-keystore.jks
-      - ./quokka-backend/config/quarkus-realm.json:/opt/keycloak/data/import/realm.json
-    ports:
-      - "8443:8443"
-    restart: always
-  quokka-db:
-    image: quay.io/debezium/postgres:15
-    container_name: "quokka-db"
-    volumes:
-      - /var/quokka_db_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    restart: always
-    environment:
-      TZ: Australia/Brisbane
-      POSTGRES_USER: quokka
-      POSTGRES_PASSWORD: quokka
-      POSTGRES_DB: quokka_db
   quokka-backend:
-    depends_on:
-      - quokka-db
-      - quokka-keycloak
     image: tedwon/quokka-backend:latest
     container_name: "quokka-backend"
     environment:
       TZ: Australia/Brisbane
     ports:
-      - "8080:8080"
+      - "2402:2402"
       - "8543:8443"
     restart: always
   quokka-frontend:
