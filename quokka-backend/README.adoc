@@ -76,5 +76,5 @@ docker build -f src/main/docker/Dockerfile.native-micro -t tedwon/quokka-backend
 
 [source,bash,options="nowrap"]
 ----
-docker run -i --rm -p 8080:8080 --network quokka_net tedwon/quokka-backend:latest
+docker run -i --rm -p 2402:2402 --network quokka_net tedwon/quokka-backend:latest
 ----

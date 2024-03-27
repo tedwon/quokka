@@ -75,9 +75,12 @@ quay.io/debezium/postgres:15
 cd quokka-backend
 ./mvnw clean package
 docker build -f src/main/docker/Dockerfile.jvm -t tedwon/quokka-backend:latest .
-docker run -i --rm -e TZ=Australia/Brisbane -p 8080:8080 --network quokka_net tedwon/quokka-backend:latest
+docker run -i --rm -e TZ=Australia/Brisbane -p 2402:2402 --network quokka_net tedwon/quokka-backend:latest
 
-cd quokka-frontend
+docker run -i --rm -p 2402:2402 --network quokka_net tedwon/quokka-backend:latest
+
+cd ~/quokka/quokka-frontend
+podman build -t tedwon/quokka-frontend:latest .
 docker build -t tedwon/quokka-frontend:latest .
 docker run -i -rm -e TZ=Australia/Brisbane -p 3000:3000 --network quokka_net tedwon/quokka-frontend:latest
 
@@ -120,7 +123,7 @@ docker push tedwon/quokka-frontend:latest
 
 === Quarkus Dev UI
 
-http://localhost:8080/q/dev/
+http://localhost:2402/q/dev/
 
 
 === Run Debezium
